@@ -24,7 +24,9 @@ public class ExtractTest {
     
     private static final Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
     private static final Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
-    
+    //me
+    private static final Tweet tweet3 = new Tweet(3, "itsjustme", "i'm typinggg @milko this for ttttesting @ranko asa", d2);
+    private static final Tweet tweet4 = new Tweet(4,"meagain", " @ranko", d1);
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
@@ -43,6 +45,14 @@ public class ExtractTest {
         Set<String> mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet1));
         
         assertTrue("expected empty set", mentionedUsers.isEmpty());
+        // byme bellow
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet3));
+        assertFalse("expected non empty set", mentionedUsers.isEmpty());
+        assertEquals(2, mentionedUsers.size());
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet4));
+        assertEquals(1, mentionedUsers.size());
+        
+        
     }
 
     /*
@@ -59,4 +69,5 @@ public class ExtractTest {
      * keep them in this test class.
      */
 
+    
 }

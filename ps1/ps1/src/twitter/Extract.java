@@ -3,6 +3,7 @@
  */
 package twitter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +44,33 @@ public class Extract {
      *         include a username at most once.
      */
     public static Set<String> getMentionedUsers(List<Tweet> tweets) {
-        throw new RuntimeException("not implemented");
+        //throw new RuntimeException("not implemented");
+        Set<String> names = new HashSet<>();
+        for (Tweet tweet : tweets){
+            String text = tweet.getText();
+            
+            for (int i = 1; i < text.length()-1;i++){
+                String tmp = "";
+                //System.out.println(i);
+                if(text.charAt(i-1)==' ' && text.charAt(i)=='@'){
+                    i++;
+                   // System.out.println("ENTERED");
+                    while(text.charAt(i) != ' '  && i < text.length()){
+                        tmp = tmp+text.charAt(i);
+                        i++;
+                       // System.out.println("ENTERED!");
+                    }
+                }
+                if (tmp.length() != 0){
+                    names.add(tmp);
+                    tmp = "";
+                }
+                
+            }
+                             
+        }
+        return names;
+        
     }
 
 }
