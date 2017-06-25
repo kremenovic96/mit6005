@@ -56,14 +56,15 @@ public class Extract {
                     if(i-1 != 0) i++;
                 
                     //System.out.println("ENTERED");
-                    while(text.charAt(i) != ' '  && i < text.length()){
+                    while(text.charAt(i) != ' '){
+                        if (i == text.length()) break;//-1 rijesi al hvali zadnj sllovo
                         tmp = tmp+text.charAt(i);
-                        if(i<text.length()-1)//vjerovatno ce trebati samo izbr. if da bude kao prije(isto ne radi kad zadnje nije spejs)
                         i++;
-                       // System.out.println(tmp.length());
+                        System.out.println(i);
                     }
                 }
-                //System.out.println("left while");
+                System.out.println(tmp);
+                System.out.println("left while");
                 if (tmp.length() != 0){
                     names.add(tmp);
                    // System.out.println(tmp);
