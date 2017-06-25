@@ -48,22 +48,25 @@ public class Extract {
         Set<String> names = new HashSet<>();
         for (Tweet tweet : tweets){
             String text = tweet.getText();
-            System.out.println(text);
+           // System.out.println(text);
             for (int i = 1; i < text.length();i++){
                 String tmp = "";
                 //System.out.println(i);
                 if((text.charAt(i-1)==' ' && text.charAt(i)=='@') || (i-1==0 && text.charAt(0)=='@')){
                     if(i-1 != 0) i++;
                 
-                    System.out.println("ENTERED");
+                    //System.out.println("ENTERED");
                     while(text.charAt(i) != ' '  && i < text.length()){
                         tmp = tmp+text.charAt(i);
+                        if(i<text.length()-1)//vjerovatno ce trebati samo izbr. if da bude kao prije(isto ne radi kad zadnje nije spejs)
                         i++;
-                        System.out.println(tmp.length());
+                       // System.out.println(tmp.length());
                     }
                 }
+                //System.out.println("left while");
                 if (tmp.length() != 0){
                     names.add(tmp);
+                   // System.out.println(tmp);
                     tmp = "";
                 }
                 
