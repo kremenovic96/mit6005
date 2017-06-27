@@ -44,25 +44,25 @@ public class ExtractTest {
     
     @Test
     public void testGetMentionedUsersNoMention() {
-        Set<String> mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet4));
+        Set<String> mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet1));
         
-        //assertTrue("expected empty set", mentionedUsers.isEmpty());
+        assertTrue("expected empty set", mentionedUsers.isEmpty());
         // byme bellow
-        //mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet4));
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet4));
         System.out.println(mentionedUsers+"testing");
         assertFalse("expected non empty set", mentionedUsers.isEmpty());
         
         //assertEquals(2, mentionedUsers.size());
-       // mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet5));
-       // assertEquals(1, mentionedUsers.size());
-       // System.out.println(mentionedUsers+"testing");
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet5));
+        assertEquals(1, mentionedUsers.size());
+        System.out.println(mentionedUsers+"testing");
 
-       // mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet3));
-       // assertEquals(2, mentionedUsers.size());
-       // System.out.println(mentionedUsers+"testing");
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet3));
+        assertEquals(2, mentionedUsers.size());
+        System.out.println(mentionedUsers+"testing");
 
-       // mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet2));
-       // assertTrue("should be empty set", mentionedUsers.isEmpty());
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet2));
+        assertTrue("should be empty set", mentionedUsers.isEmpty());
         
         
     }

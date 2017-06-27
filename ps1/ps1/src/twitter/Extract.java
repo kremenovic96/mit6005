@@ -62,13 +62,13 @@ public class Extract {
                         if (text.charAt(i) == ' ') break;//-1 rijesi al hvali zadnj sllovo
                         tmp = tmp+text.charAt(i);
                         i++;
-                        System.out.println(i);
-                        System.out.println(tmp);
+                       // System.out.println(i);
+                       // System.out.println(tmp);
                     }
                 } 
                 //tmp = tmp+'a';
-                System.out.println(tmp.length()+"len of tmp");
-                System.out.println("left while");
+               // System.out.println(tmp.length()+"len of tmp");
+               // System.out.println("left while");
                 if (tmp.length() != 0){
                     names.add(tmp);
                    // System.out.println(tmp);
