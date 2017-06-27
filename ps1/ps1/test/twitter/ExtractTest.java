@@ -27,7 +27,8 @@ public class ExtractTest {
     //me
     private static final Tweet tweet3 = new Tweet(3, "itsjustme", "i'm typinggg @milko this for ttttesting @ranko asa", d2);
     private static final Tweet tweet4 = new Tweet(4,"meagain", "@ranko ", d1);
-    private static final Tweet tweet5 = new Tweet(5,"meagainbitches", "tagging someone at the end @ranko", d1);
+    private static final Tweet tweet5 = new Tweet(5,"meagain1", "tagging someone at the end @ranko", d1);
+    private static final Tweet tweet6 = new Tweet(6,"meagain2", "email not username bitdiddle@mit.edu", d1);
 
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -40,8 +41,20 @@ public class ExtractTest {
         
         assertEquals("expected start", d1, timespan.getStart());
         assertEquals("expected end", d2, timespan.getEnd());
+        
+        
     }
     
+    /*
+     * Testing strategy
+     * Partition the input as follows:
+     * tagged user:
+     * at the start
+     * at the end
+     * in the middle
+     * multiple tags
+     * email(not username) in the text
+     */
     @Test
     public void testGetMentionedUsersNoMention() {
         Set<String> mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet1));
@@ -49,21 +62,22 @@ public class ExtractTest {
         assertTrue("expected empty set", mentionedUsers.isEmpty());
         // byme bellow
         mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet4));
-        System.out.println(mentionedUsers+"testing");
+    //    System.out.println(mentionedUsers+"testing");
         assertFalse("expected non empty set", mentionedUsers.isEmpty());
         
         //assertEquals(2, mentionedUsers.size());
         mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet5));
         assertEquals(1, mentionedUsers.size());
-        System.out.println(mentionedUsers+"testing");
+      //  System.out.println(mentionedUsers+"testing");
 
         mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet3));
         assertEquals(2, mentionedUsers.size());
-        System.out.println(mentionedUsers+"testing");
+//        System.out.println(mentionedUsers+"testing");
 
         mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet2));
         assertTrue("should be empty set", mentionedUsers.isEmpty());
-        
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet6));
+        assertTrue("Should be empty set", mentionedUsers.isEmpty());
         
     }
 

@@ -3,6 +3,7 @@
  */
 package twitter;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,12 @@ public class Extract {
      *         every tweet in the list.
      */
     public static Timespan getTimespan(List<Tweet> tweets) {
-        throw new RuntimeException("not implemented");
+       // throw new RuntimeException("not implemented");        
+        Instant a = tweets.get(0).getTimestamp();
+        Instant b = tweets.get(1).getTimestamp();
+        Timespan c = new Timespan(a, b);
+        return c;
+        
     }
 
     /**
@@ -47,7 +53,7 @@ public class Extract {
         //throw new RuntimeException("not implemented");
         Set<String> names = new HashSet<>();
         for (Tweet tweet : tweets){
-            System.out.println("SSSSS");
+          //  System.out.println("SSSSS");
             String text = tweet.getText();
            // System.out.println(text);
             
