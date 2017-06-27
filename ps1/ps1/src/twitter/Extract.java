@@ -47,8 +47,10 @@ public class Extract {
         //throw new RuntimeException("not implemented");
         Set<String> names = new HashSet<>();
         for (Tweet tweet : tweets){
+            System.out.println("SSSSS");
             String text = tweet.getText();
            // System.out.println(text);
+            
             for (int i = 1; i < text.length();i++){
                 String tmp = "";
                 //System.out.println(i);
@@ -56,14 +58,16 @@ public class Extract {
                     if(i-1 != 0) i++;
                 
                     //System.out.println("ENTERED");
-                    while(text.charAt(i) != ' '){
-                        if (i == text.length()) break;//-1 rijesi al hvali zadnj sllovo
+                    while(i != text.length()){
+                        if (text.charAt(i) == ' ') break;//-1 rijesi al hvali zadnj sllovo
                         tmp = tmp+text.charAt(i);
                         i++;
                         System.out.println(i);
+                        System.out.println(tmp);
                     }
-                }
-                System.out.println(tmp);
+                } 
+                //tmp = tmp+'a';
+                System.out.println(tmp.length()+"len of tmp");
                 System.out.println("left while");
                 if (tmp.length() != 0){
                     names.add(tmp);
