@@ -21,28 +21,55 @@ public class ExtractTest {
     
     private static final Instant d1 = Instant.parse("2016-02-17T10:00:00Z");
     private static final Instant d2 = Instant.parse("2016-02-17T11:00:00Z");
+    private static final Instant d3 = Instant.parse("2016-02-17T11:25:00Z");
+    private static final Instant d4 = Instant.parse("2016-02-17T11:09:00Z");
+
+
     
     private static final Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
     private static final Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
     //me
     private static final Tweet tweet3 = new Tweet(3, "itsjustme", "i'm typinggg @milko this for ttttesting @ranko asa", d2);
-    private static final Tweet tweet4 = new Tweet(4,"meagain", "@ranko ", d1);
+    private static final Tweet tweet4 = new Tweet(4,"meagain", "@ranko", d1);
     private static final Tweet tweet5 = new Tweet(5,"meagain1", "tagging someone at the end @ranko", d1);
-    private static final Tweet tweet6 = new Tweet(6,"meagain2", "email not username bitdiddle@mit.edu", d1);
+    private static final Tweet tweet6 = new Tweet(6,"meagain2", "email not username bitdiddle@mit.edu", d3);
+    private static final Tweet tweet7 = new Tweet(7,"meagain3", "lower and uppercase @RANKO @ranko", d4);
 
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
     }
-    
+    /*
+     * testing strategy:
+     * timespan between:
+     * two tweets
+     * three tweets
+     * four tweets
+     */
     @Test
     public void testGetTimespanTwoTweets() {
         Timespan timespan = Extract.getTimespan(Arrays.asList(tweet1, tweet2));
         
         assertEquals("expected start", d1, timespan.getStart());
         assertEquals("expected end", d2, timespan.getEnd());
+        timespan = Extract.getTimespan(Arrays.asList(tweet6, tweet7));
+        assertEquals("expected start", d4, timespan.getStart());
+        assertEquals("expected end", d3, timespan.getEnd());
         
         
+    }
+    @Test
+    public void testGetTimespanThreeTweets(){
+        Timespan timespan = Extract.getTimespan(Arrays.asList(tweet1, tweet2, tweet3));
+        assertEquals("expected start",d1, timespan.getStart());
+        assertEquals("expected end", d2, timespan.getEnd());
+        
+    }
+    @Test
+    public void testGetTimesFourTweets(){
+        Timespan timespan = Extract.getTimespan(Arrays.asList(tweet1, tweet2, tweet7));
+        assertEquals("expected start", d1, timespan.getStart());
+        assertEquals("expected end", d4, timespan.getEnd());
     }
     
     /*
@@ -54,6 +81,7 @@ public class ExtractTest {
      * in the middle
      * multiple tags
      * email(not username) in the text
+     * upper and lowercase usernames are equal
      */
     @Test
     public void testGetMentionedUsersNoMention() {
@@ -78,6 +106,8 @@ public class ExtractTest {
         assertTrue("should be empty set", mentionedUsers.isEmpty());
         mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet6));
         assertTrue("Should be empty set", mentionedUsers.isEmpty());
+        mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet7));
+        assertEquals(1, mentionedUsers.size());
         
     }
 

@@ -27,11 +27,33 @@ public class Extract {
      */
     public static Timespan getTimespan(List<Tweet> tweets) {
        // throw new RuntimeException("not implemented");        
-        Instant a = tweets.get(0).getTimestamp();
-        Instant b = tweets.get(1).getTimestamp();
+        Instant a = startTime(tweets);
+        Instant b = endTime(tweets);
         Timespan c = new Timespan(a, b);
         return c;
         
+    }
+    public static Instant startTime(List<Tweet> tweets){
+        if(tweets.isEmpty())
+            return Instant.now();
+        
+        Instant startTime = Instant.MAX;
+        for(Tweet tweet : tweets)
+            if(tweet.getTimestamp().isBefore(startTime))
+                startTime = tweet.getTimestamp();
+        
+        return startTime;
+    }
+    
+    
+    public static Instant endTime(List<Tweet> tweets){
+        if(tweets.isEmpty())
+            return Instant.now();
+        Instant endTime = Instant.MIN;
+        for(Tweet tweet : tweets)
+            if(tweet.getTimestamp().isAfter(endTime))
+                endTime = tweet.getTimestamp();
+        return endTime;
     }
 
     /**
@@ -54,7 +76,7 @@ public class Extract {
         Set<String> names = new HashSet<>();
         for (Tweet tweet : tweets){
           //  System.out.println("SSSSS");
-            String text = tweet.getText();
+            String text = tweet.getText().toLowerCase();
            // System.out.println(text);
             
             for (int i = 1; i < text.length();i++){
