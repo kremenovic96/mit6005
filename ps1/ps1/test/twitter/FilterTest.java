@@ -24,18 +24,39 @@ public class FilterTest {
     
     private static final Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
     private static final Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
-    
+    private static final Tweet tweet3 = new Tweet(3, "ranko", "its just tweet by me", d2);
+    private static final Tweet tweet4 = new Tweet(4, "milko", "i'm tweeting in milko's name", d2);
+    private static final Tweet tweet5 = new Tweet(5, "ranko", "it's me again", d2);
+
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
     }
-    
+    /*
+     * testing strategy:
+     * checking for username in two tweets
+     * -in three tweets
+     * -in 5 tweets
+     * testing order
+     */
     @Test
     public void testWrittenByMultipleTweetsSingleResult() {
         List<Tweet> writtenBy = Filter.writtenBy(Arrays.asList(tweet1, tweet2), "alyssa");
         
         assertEquals("expected singleton list", 1, writtenBy.size());
         assertTrue("expected list to contain tweet", writtenBy.contains(tweet1));
+        
+        writtenBy = Filter.writtenBy(Arrays.asList(tweet2, tweet3, tweet4), "ranko");
+        assertEquals("expected one list", 1, writtenBy.size());
+        assertTrue("expected tweet", writtenBy.contains(tweet3));
+        writtenBy = Filter.writtenBy(Arrays.asList(tweet1, tweet2, tweet3, tweet4, tweet5), "ranko");
+        assertEquals("expected two list's", 2, writtenBy.size());
+        //checking separately that two tweets are there
+        assertTrue("expected 'first' tweet",writtenBy.contains(tweet3));
+        assertTrue("expected 'second' tweet", writtenBy.contains(tweet5));
+        assertEquals("its just tweet by me", writtenBy.get(0).getText());
+        assertEquals("it's me again", writtenBy.get(1).getText());
+        
     }
     
     @Test
