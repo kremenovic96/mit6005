@@ -47,7 +47,12 @@ public class Filter {
      *         in the same order as in the input list.
      */
     public static List<Tweet> inTimespan(List<Tweet> tweets, Timespan timespan) {
-        throw new RuntimeException("not implemented");
+       // throw new RuntimeException("not implemented");
+        List<Tweet> sol = new ArrayList<Tweet>();
+        for(Tweet tweet : tweets)
+            if (tweet.getTimestamp().isAfter(timespan.getStart()) && tweet.getTimestamp().isBefore(timespan.getEnd()))
+                sol.add(tweet);
+        return sol;
     }
 
     /**

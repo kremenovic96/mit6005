@@ -21,12 +21,15 @@ public class FilterTest {
     
     private static final Instant d1 = Instant.parse("2016-02-17T10:00:00Z");
     private static final Instant d2 = Instant.parse("2016-02-17T11:00:00Z");
-    
+    private static final Instant d3 = Instant.parse("2016-02-17T13:00:00Z");
+    private static final Instant d4 = Instant.parse("2016-02-17T15:00:00Z");
+
+
     private static final Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
     private static final Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
     private static final Tweet tweet3 = new Tweet(3, "ranko", "its just tweet by me", d2);
-    private static final Tweet tweet4 = new Tweet(4, "milko", "i'm tweeting in milko's name", d2);
-    private static final Tweet tweet5 = new Tweet(5, "ranko", "it's me again", d2);
+    private static final Tweet tweet4 = new Tweet(4, "milko", "i'm tweeting in milko's name", d4);
+    private static final Tweet tweet5 = new Tweet(5, "ranko", "it's me again", d3);
 
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -58,6 +61,11 @@ public class FilterTest {
         assertEquals("it's me again", writtenBy.get(1).getText());
         
     }
+    /*
+     * testing strategy:
+     * tweet in given time interval
+     * tweet not in such time interval
+     */
     
     @Test
     public void testInTimespanMultipleTweetsMultipleResults() {
@@ -69,6 +77,11 @@ public class FilterTest {
         assertFalse("expected non-empty list", inTimespan.isEmpty());
         assertTrue("expected list to contain tweets", inTimespan.containsAll(Arrays.asList(tweet1, tweet2)));
         assertEquals("expected same order", 0, inTimespan.indexOf(tweet1));
+        inTimespan = Filter.inTimespan(Arrays.asList(tweet5), new Timespan(testStart, testEnd));
+        assertTrue("expected empty list", inTimespan.isEmpty());
+        inTimespan = Filter.inTimespan(Arrays.asList(tweet1,tweet2,tweet3,tweet4,tweet5), new Timespan(testStart, testEnd));
+       // System.out.println(inTimespan);
+        assertEquals("should be three tweets in given timespan", 3, inTimespan.size());
     }
     
     @Test
