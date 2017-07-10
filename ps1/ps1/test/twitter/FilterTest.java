@@ -91,6 +91,13 @@ public class FilterTest {
         assertFalse("expected non-empty list", containing.isEmpty());
         assertTrue("expected list to contain tweets", containing.containsAll(Arrays.asList(tweet1, tweet2)));
         assertEquals("expected same order", 0, containing.indexOf(tweet1));
+        containing = Filter.containing(Arrays.asList(tweet3, tweet4), Arrays.asList("just"));
+        assertTrue("expected list to contain tweets", containing.containsAll(Arrays.asList(tweet3)));
+        containing = Filter.containing(Arrays.asList(tweet3, tweet4), Arrays.asList("name"));
+        assertTrue("expected list to contain tweets", containing.containsAll(Arrays.asList(tweet4)));
+        containing = Filter.containing(Arrays.asList(tweet3, tweet4), Arrays.asList("name", "aaaa"));
+        assertEquals("should be one tweet ",1, containing.size());
+
     }
 
     /*

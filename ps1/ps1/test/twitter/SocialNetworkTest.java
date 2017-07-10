@@ -5,7 +5,9 @@ package twitter;
 
 import static org.junit.Assert.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +27,52 @@ public class SocialNetworkTest {
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
     }
-    
+    /*
+     * testing strategy:
+     * input empty list of tweets, so returned Map must be empty
+     */
+    private static final Instant d1 = Instant.parse("2016-02-17T10:00:00Z");
+    private static final Instant d2 = Instant.parse("2016-02-17T11:00:00Z");
+    private static final Instant d3 = Instant.parse("2016-02-17T11:25:00Z");
+    private static final Instant d4 = Instant.parse("2016-02-17T11:09:00Z");  
+    private static final Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
+    private static final Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
+    private static final Tweet tweet3 = new Tweet(3, "itsjustme", "i'm typinggg @milko this for ttttesting @ranko asa", d2);
+    private static final Tweet tweet4 = new Tweet(4,"meagain", "@ranko", d1);
+    private static final Tweet tweet5 = new Tweet(5,"meagain1", "tagging someone at the end @ranko", d1);
+    private static final Tweet tweet6 = new Tweet(6,"meagain2", "email not username bitdiddle@mit.edu", d3);
+    private static final Tweet tweet7 = new Tweet(7,"meagain3", "lower and uppercase @RANKO @ranko", d4);
+    private static final Tweet tweet8 = new Tweet(8,"meagain4", "here is @goran and @ranko", d4);
+
     @Test
     public void testGuessFollowsGraphEmpty() {
         Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(new ArrayList<>());
         
         assertTrue("expected empty graph", followsGraph.isEmpty());
+        followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet1, tweet2));
+      
+    }
+    /*
+     * testing strategy
+     * one mentioned user in tweet
+     * two mentioned users in tweet
+     * one user mentioned twice in tweet
+     * 
+     */
+    @Test
+    public void testGuessFollowsGraph(){
+        Map<String, Set<String>> followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet5));
+        assertFalse("expected non-empty graph", followsGraph.isEmpty());
+        followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet3));
+     //   System.out.println(followsGraph);
+      //  System.out.println(followsGraph.values());
+        assertEquals(1,followsGraph.size());
+        assertTrue(followsGraph.values().contains(Extract.getMentionedUsers(Arrays.asList(tweet3))));
+        followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet5, tweet6));
+        assertTrue(followsGraph.values().contains(Extract.getMentionedUsers(Arrays.asList(tweet5, tweet6))));
+        assertEquals(2, followsGraph.size());
+        followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet7));
+        assertEquals(1, followsGraph.values().size());
     }
     
     @Test
@@ -39,6 +81,19 @@ public class SocialNetworkTest {
         List<String> influencers = SocialNetwork.influencers(followsGraph);
         
         assertTrue("expected empty list", influencers.isEmpty());
+        followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet5));
+        influencers = SocialNetwork.influencers(followsGraph);
+        assertEquals("expected one item", 1, influencers.size());
+        followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet1));
+        influencers = SocialNetwork.influencers(followsGraph);
+        assertTrue("expected empty list", influencers.isEmpty());
+        followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet5, tweet8));
+        influencers = SocialNetwork.influencers(followsGraph);
+        assertEquals("ranko", influencers.get(0));
+        assertEquals("goran", influencers.get(1));
+        
+
+        
     }
 
     /*

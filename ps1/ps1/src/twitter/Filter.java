@@ -4,6 +4,7 @@
 package twitter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -71,7 +72,15 @@ public class Filter {
      *         same order as in the input list.
      */
     public static List<Tweet> containing(List<Tweet> tweets, List<String> words) {
-        throw new RuntimeException("not implemented");
+        //throw new RuntimeException("not implemented");
+        List<Tweet> sol = new ArrayList<Tweet>();
+        for(Tweet tweet : tweets)
+            for(String s : words){
+                if(Arrays.asList(tweet.getText().toLowerCase().split(" ")).contains(s.toLowerCase()))
+                    if(!sol.contains(s.toLowerCase()))
+                        sol.add(tweet);
+            }
+        return sol;
     }
 
 }

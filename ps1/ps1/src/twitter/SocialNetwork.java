@@ -3,6 +3,9 @@
  */
 package twitter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +44,13 @@ public class SocialNetwork {
      *         either authors or @-mentions in the list of tweets.
      */
     public static Map<String, Set<String>> guessFollowsGraph(List<Tweet> tweets) {
-        throw new RuntimeException("not implemented");
+       // throw new RuntimeException("not implemented");
+        Map<String, Set<String>> sol = new HashMap<>();
+        for(Tweet tweet : tweets){
+            //String s = tweet.getText().toLowerCase();
+            sol.put(tweet.getAuthor(), Extract.getMentionedUsers(Arrays.asList(tweet)));
+        }
+        return sol;
     }
 
     /**
@@ -54,7 +63,32 @@ public class SocialNetwork {
      *         descending order of follower count.
      */
     public static List<String> influencers(Map<String, Set<String>> followsGraph) {
-        throw new RuntimeException("not implemented");
+       // throw new RuntimeException("not implemented");
+        List<String> sol = new ArrayList<>();
+        Map<String, Integer> freq = new HashMap<>();
+        for(Set<String> a : followsGraph.values()){
+            for(String s : a){//System.out.println(s);
+                if(!freq.containsKey(s))
+                    freq.put(s, 1);
+                else
+                    freq.replace(s, freq.get(s)+1);
+            }
+        }
+        int n = freq.keySet().size();
+        for(int i = 0; i <n; i++){
+            String most = mostOccuring(freq).getKey();
+            sol.add(most);
+            freq.remove(most);
+        }
+        return sol;
+    }
+    private static Map.Entry<String, Integer> mostOccuring(Map<String, Integer> freq){
+        Map.Entry<String, Integer> maxEntry = null;
+        for(Map.Entry<String, Integer> entry : freq.entrySet()){
+            if(maxEntry == null || maxEntry.getValue().compareTo(entry.getValue())<0)
+                maxEntry = entry;
+        }
+        return maxEntry;
     }
 
 }
