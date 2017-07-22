@@ -74,7 +74,12 @@ public class SocialNetworkTest {
         followsGraph = SocialNetwork.guessFollowsGraph(Arrays.asList(tweet7));
         assertEquals(1, followsGraph.values().size());
     }
-    
+    /*
+     * testing strategy
+     * empty input
+     * input with one tweet
+     * input with multiple tweets
+     */
     @Test
     public void testInfluencersEmpty() {
         Map<String, Set<String>> followsGraph = new HashMap<>();
