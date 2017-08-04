@@ -5,7 +5,9 @@ package graph;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -42,5 +44,147 @@ public abstract class GraphInstanceTest {
     }
     
     // TODO other tests for instance methods of Graph
+    @Test
+    public void testAdd(){
+        Graph<String> a = emptyInstance();
+        a.add("first elem");
+        assertEquals("must be only one elem in a graph", 1, a.vertices().size());
+        a.add("second elem");
+        assertEquals("must be two elem's", 2, a.vertices().size());
+        a.add("third elem");
+        assertEquals("must be three elements", 3, a.vertices().size());
+        String s = "four";
+        assertTrue(a.add(s));
+        assertFalse(a.add(s));
+    }
+    /*
+     * testing strategy:
+     * remove from middle
+     *  from end
+     *  from start
+     *  from middle
+     */
+    @Test
+    public void testRemove(){
+        Graph<String> a = emptyInstance();
+        String aa = "first elem";
+        String b = "second elem";
+        String c = "third elem";
+        String d = "fourth";
+        a.add(aa);
+        a.add(b);
+        a.add(c);
+        a.add(d);
+        assertFalse(a.remove("not there"));
+        assertTrue(a.remove(aa));
+        assertFalse(a.vertices().contains(aa));
+        assertEquals(3, a.vertices().size());
+        assertTrue(a.remove(c));
+        assertTrue(a.remove(d));
+        assertTrue(a.remove(b));
+        assertTrue(a.vertices().isEmpty());
+        
+    }
+    /*
+     * testing strat
+     * connect two vertices
+     * change weight between these two
+     * connect other way round
+     * 
+     */
+    @Test
+    public void testset(){
+        Graph<String> a = emptyInstance();
+        String aa = "first elem";
+        String b = "second elem";
+        String c = "third elem";
+        String d = "fourth";
+        a.add(aa);
+        a.add(b);
+        a.add(c);
+        a.add(d);
+        assertEquals(0, a.set(aa, b, 2));
+        assertEquals(0, a.set(c, d, 1));
+        assertEquals(1, a.set(c, d, 5));
+        assertEquals(2, a.set(aa, b, 6));
+        assertEquals(0, a.set(b, aa, 31));
+        String x = "new el";
+        String y = "new el";
+        a.set(x, y, 55);//there is no such vertices so they must be auto-added
+        assertEquals(55, a.set(x, y, 66));
+        
+    }
+    /*
+     * test strat:
+     * added vertices individually
+     * added vertices by using set() method
+     * 
+     * 
+     * 
+     * 
+     */
+    @Test
+    public void testVertices(){
+        Graph<String> a = emptyInstance();
+        String aa = "first elem";
+        String b = "second elem";
+        String c = "third elem";
+        String d = "fourth";
+        a.add(aa);
+        a.add(b);
+        a.add(c);
+        a.add(d);
+        assertTrue(a.vertices().containsAll(Arrays.asList(aa,b,c,d)));
+        String x = "fifth";
+        String y = "six";
+        a.set(x, y, 1);
+        assertTrue(a.vertices().contains(x));
+        assertTrue(a.vertices().contains(y));
+    }
+    /*
+     * testing strat
+     * src of one vertices is one 
+     * src of other three vertices is same
+     */
+    @Test
+    public void testSources(){
+        Graph<String> a = emptyInstance();
+        String aa = "first elem";
+        String b = "second elem";
+        String c = "third elem";
+        String d = "fourth";
+        a.set(aa, b, 1);
+        a.set(c, b, 2);
+        a.set(aa, b, 6);
+        a.set(aa, c, 5);
+        Map<String, Integer> tst = emptyInstance().sources(c);
+        assertEquals(1, tst.size());
+        tst = emptyInstance().sources(b);
+        assertEquals(2, tst.size());
+        assertTrue(tst.values().containsAll(Arrays.asList(2, 6)));
+    }
+    /*
+     * testing strat
+     * four vertices one point to one 
+     * three point to one
+     */
+    @Test
+    public void testTargets(){
+        Graph<String> a = emptyInstance();
+        String aa = "first elem";
+        String b = "second elem";
+        String c = "third elem";
+        String d = "fourth";
+        a.set(aa, b, 1);
+        a.set(c, b, 2);
+        a.set(aa, b, 6);
+        a.set(aa, c, 5);
+        Map<String, Integer> tst = emptyInstance().targets(c);
+        assertEquals(1, tst.size());
+        tst = emptyInstance().targets(b);
+        assertEquals(2, tst.size());
+        assertTrue(tst.keySet().containsAll(Arrays.asList(aa,c)));
+    }
+    
     
 }
