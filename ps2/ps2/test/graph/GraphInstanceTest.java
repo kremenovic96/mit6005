@@ -105,6 +105,7 @@ public abstract class GraphInstanceTest {
         a.add(d);
         assertEquals(0, a.set(aa, b, 2));
         assertEquals(0, a.set(c, d, 1));
+        
         assertEquals(1, a.set(c, d, 5));
         assertEquals(2, a.set(aa, b, 6));
         assertEquals(0, a.set(b, aa, 31));
@@ -153,13 +154,17 @@ public abstract class GraphInstanceTest {
         String b = "second elem";
         String c = "third elem";
         String d = "fourth";
+     //   a.set("xy", "yx", 44);
+      /*  Map<String, Integer> tst = emptyInstance().sources("xy");
+        assertEquals(1, tst.size());*/
+
         a.set(aa, b, 1);
         a.set(c, b, 2);
         a.set(aa, b, 6);
         a.set(aa, c, 5);
-        Map<String, Integer> tst = emptyInstance().sources(c);
+        Map<String, Integer> tst = a.sources(c);
         assertEquals(1, tst.size());
-        tst = emptyInstance().sources(b);
+        tst = a.sources(b);
         assertEquals(2, tst.size());
         assertTrue(tst.values().containsAll(Arrays.asList(2, 6)));
     }
@@ -179,11 +184,15 @@ public abstract class GraphInstanceTest {
         a.set(c, b, 2);
         a.set(aa, b, 6);
         a.set(aa, c, 5);
-        Map<String, Integer> tst = emptyInstance().targets(c);
+        //System.out.println(a);
+        Map<String, Integer> tst = a.targets(c);
         assertEquals(1, tst.size());
-        tst = emptyInstance().targets(b);
+        tst = a.targets(b);
+        assertEquals(0, tst.size());
+        a.set(c, "hello", 99);
+        tst = a.targets(c);
         assertEquals(2, tst.size());
-        assertTrue(tst.keySet().containsAll(Arrays.asList(aa,c)));
+        assertTrue(tst.keySet().containsAll(Arrays.asList(b, "hello")));
     }
     
     
