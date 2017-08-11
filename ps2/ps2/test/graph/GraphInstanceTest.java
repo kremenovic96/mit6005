@@ -124,7 +124,7 @@ public abstract class GraphInstanceTest {
      * 
      * 
      */
-    @Test
+   /* @Test
     public void testVertices(){
         Graph<String> a = emptyInstance();
         String aa = "first elem";
@@ -141,7 +141,7 @@ public abstract class GraphInstanceTest {
         a.set(x, y, 1);
         assertTrue(a.vertices().contains(x));
         assertTrue(a.vertices().contains(y));
-    }
+    }*/
     /*
      * testing strat
      * src of one vertices is one 

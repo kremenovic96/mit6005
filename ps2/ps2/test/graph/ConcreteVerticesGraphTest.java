@@ -35,14 +35,35 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     //   TODO
     
     // TODO tests for ConcreteVerticesGraph.toString()
-    
+        @Test
+        public void testtoString(){
+            Graph<String> a = emptyInstance();
+            a.add("hello");
+            a.add("you");
+            a.add("there?");
+            a.set("hello", "you", 2);
+            a.set("you", "meeee", 36);
+            /*a.set("haha", "hehe", 1);
+            a.set("hehe", "monkey", 32);
+            a.set("hello", "monkey", 16);*/
+        //    System.out.print(a);
+            String graf = a.toString();
+            assertTrue(graf.contains("4 vertices"));
+            assertTrue(graf.contains("hello"));
+            assertTrue(graf.contains("you"));
+            assertTrue(graf.contains("there"));
+            assertTrue(graf.contains("hello-2-you"));
+            assertTrue(graf.contains("you-36-meeee"));
+        }
     /*
      * Testing Vertex...
      */
     
     // Testing strategy for Vertex
-    //
+    //strategy above each test
     // TODO tests for operations of Vertex
+    
+    //tests name of vertex
     @Test
     public void testVertexgetLabel(){
         Vertex v = new Vertex("first");
@@ -50,8 +71,10 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
         v.changeLabel("changed");
         assertEquals("changed", v.getLabel());
     }
+    
+    //
     @Test
-    public void testGetSources(){
+    public void testSources(){
         Vertex v = new Vertex("third");
         v.addSource("second", 1);
         v.addSource("first", 54);
@@ -66,7 +89,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
         assertEquals(99, tst.get("zero").intValue());       
     }
     @Test
-    public void testGetTargets(){
+    public void testTargets(){
         Vertex v = new Vertex("zero");
         v.addTarget("first", 1);
         v.addTarget("second", 2);
@@ -81,4 +104,40 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
         assertEquals(32, tst.get("third").intValue());
     }
     
+    @Test
+    public void testAdd(){
+        Graph<String> graf = emptyInstance();
+        graf.add("first");
+        assertTrue(graf.vertices().contains("first"));
+        graf.add("second");
+        assertEquals("there is two vertices", 2, graf.vertices().size());
+        
+    }
+    
+    @Test
+    public void testRemove(){
+        //napisati za vertex graf remove metodu testtt
+        Graph<String> graf = emptyInstance();
+        graf.add("first");
+        assertTrue(graf.remove("first"));
+        assertTrue(graf.vertices().isEmpty());
+        graf.add("second");
+        graf.add("first");
+        graf.remove("first");
+        assertEquals(1, graf.vertices().size());
+        assertTrue(graf.vertices().contains("second"));        
+    }
+    
+    @Test
+    public void testset(){
+        Graph<String> graf = emptyInstance();
+        graf.add("first");
+        graf.add("second");
+        assertEquals(0, graf.set("first", "second", 5));
+        assertEquals(5, graf.set("first", "second", 31));
+        assertEquals(0, graf.set("hello", "you", 55));
+        assertEquals(0, graf.set("second", "first", 55));
+        assertEquals(55, graf.set("second", "first", 32));
+        
+    }
 }
