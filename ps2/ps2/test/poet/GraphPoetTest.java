@@ -13,7 +13,7 @@ import org.junit.Test;
 public class GraphPoetTest {
     
     // Testing strategy
-    //   TODO
+    //   above each method
     
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {

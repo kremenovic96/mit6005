@@ -24,7 +24,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
      * Provide a ConcreteVerticesGraph for tests in GraphInstanceTest.
      */
     @Override public Graph<String> emptyInstance() {
-        return new ConcreteVerticesGraph(new ArrayList<Vertex>());
+        return new ConcreteVerticesGraph<String>(new ArrayList<Vertex<String>>());
     }
     
     /*
@@ -66,7 +66,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     //tests name of vertex
     @Test
     public void testVertexgetLabel(){
-        Vertex v = new Vertex("first");
+        Vertex<String> v = new Vertex<>("first");
         assertEquals("first", v.getLabel());
         v.changeLabel("changed");
         assertEquals("changed", v.getLabel());
@@ -75,7 +75,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     //
     @Test
     public void testSources(){
-        Vertex v = new Vertex("third");
+        Vertex<String> v = new Vertex<>("third");
         v.addSource("second", 1);
         v.addSource("first", 54);
         v.addSource("zero", 99);
@@ -90,7 +90,7 @@ public class ConcreteVerticesGraphTest extends GraphInstanceTest {
     }
     @Test
     public void testTargets(){
-        Vertex v = new Vertex("zero");
+        Vertex<String> v = new Vertex<>("zero");
         v.addTarget("first", 1);
         v.addTarget("second", 2);
         v.addTarget("third", 32);

@@ -3,6 +3,8 @@
  */
 package graph;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,7 +28,8 @@ public interface Graph<L> {
      * @return a new empty weighted directed graph
      */
     public static <L> Graph<L> empty() {
-        throw new RuntimeException("not implemented");
+        //throw new RuntimeException("not implemented");
+        return new ConcreteEdgesGraph<L>(new HashSet<L>(), new ArrayList<Edge<L>>());                
     }
     
     /**
