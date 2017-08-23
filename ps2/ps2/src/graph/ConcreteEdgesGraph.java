@@ -98,6 +98,7 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
             vertices.remove(vertex);
             hadIt = true;
         }
+        checkRep();
         return hadIt;
     }
     

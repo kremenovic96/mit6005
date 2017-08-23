@@ -3,8 +3,17 @@
  */
 package poet;
 
+import java.util.List;
+import java.util.Set;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import graph.Graph;
 
@@ -68,7 +77,50 @@ public class GraphPoet {
      * @throws IOException if the corpus file cannot be found or read
      */
     public GraphPoet(File corpus) throws IOException {
-        throw new RuntimeException("not implemented");
+        //throw new RuntimeException("not implemented");
+        try{
+            FileReader fileR = new FileReader(corpus);
+            BufferedReader buffR = new BufferedReader(fileR);
+            List<String> lines = new ArrayList<String>();
+            String line = null;
+            while ((line = buffR.readLine()) != null)
+                lines.add(line);
+            buffR.close();
+            String all = "";
+            for(String s : lines)
+                all += s+" ";
+                
+            String[] c = all.split(" ");
+            List<String> ls = Arrays.asList(c);            
+            for(int i = 0; i < ls.size()-1; i++){ 
+                String q = ls.get(i+1).toLowerCase();
+                int sameWords = 0; int j = i+1;    
+                int ss = 0;
+                while(j<ls.size()&&ls.get(j).toLowerCase().equals(q)){
+                    sameWords++;
+                    j++;        
+                }//System.out.println(sameWords);
+                if (sameWords > ss) ss = sameWords;
+                //if (sameWords > graph.targets(ls.get(i)).get(ls.get(i+1)))
+                    graph.set(ls.get(i).toLowerCase(), ls.get(i+1).toLowerCase(), ss);
+                    //graph.add(c[i]);
+                   // if (j>i+2) 
+                    i = i+ss-1;
+                    ss = 0;
+            }
+            
+        } 
+        catch(IOException a){
+           // System.out.println(a);
+        }
+      /*  Set<String> vr = graph.vertices();
+        Iterator<String> iter = vr.iterator();
+        while(iter.hasNext()){
+            String first = iter.next();
+            String second = iter.next();
+            graph.set(first, second, 1);
+        }*/
+//System.out.println(graph);
     }
     
     // TODO checkRep
@@ -80,7 +132,20 @@ public class GraphPoet {
      * @return poem (as described above)
      */
     public String poem(String input) {
-        throw new RuntimeException("not implemented");
+       // throw new RuntimeException("not implemented");
+        String sol = "";
+        String[] tmp = input.split(" ");
+        for(int i = 0; i < tmp.length-1; i++){
+            sol += tmp[i]+" ";
+            for(String s : graph.targets(tmp[i].toLowerCase()).keySet())
+                if(graph.targets(s).keySet().contains(tmp[i+1].toLowerCase())){
+                        sol += s+ " ";    
+                }
+            
+     
+                }            
+        sol +=tmp[tmp.length-1];
+        return sol;
     }
     
     // TODO toString()

@@ -109,6 +109,9 @@ public abstract class GraphInstanceTest {
         assertEquals(1, a.set(c, d, 5));
         assertEquals(2, a.set(aa, b, 6));
         assertEquals(0, a.set(b, aa, 31));
+        assertEquals(0, a.set(b, c, 1));
+        assertEquals(31, a.set(b, aa, 31));
+        assertEquals(1, a.set(b, c, 1));
         String x = "new el";
         String y = "new el";
         a.set(x, y, 55);//there is no such vertices so they must be auto-added
