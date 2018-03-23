@@ -29,7 +29,6 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
     // Safety from rep exposure:
     //   private fields, elements L are immutable
     
-    // TODO constructor
     /*
      * makes a new ConcreteEdgesGraph with edges weight >0 and no multiple edges
      */
@@ -38,7 +37,6 @@ public class ConcreteEdgesGraph<L> implements Graph<L> {
         this.edges.addAll(edgs);
         checkRep();
     }
-    // TODO checkRep
     /*
      * check if rep invariant is true
      */

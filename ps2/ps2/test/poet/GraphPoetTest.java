@@ -25,8 +25,8 @@ public class GraphPoetTest {
     
     // TODO tests
     /*
-     * test strat.
-     * load a text from file and use it to make a poem
+     * test strat:
+     *  load a text from file and use it to make a poem
      */
     @Test
     public void testPoem(){

@@ -21,7 +21,7 @@ public class GraphStaticTest {
     //   empty()
     //     no inputs, only output is empty graph
     //     observe with vertices()
-    
+    //      remove() from empty()
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
@@ -33,6 +33,10 @@ public class GraphStaticTest {
                 Collections.emptySet(), Graph.empty().vertices());
     }
     
-    // TODO test other vertex label types in Problem 3.2
+    @Test
+    public void testRemove() {
+        assertEquals(false, Graph.empty().remove("non existing vertex"));
+    }
     
+        
 }

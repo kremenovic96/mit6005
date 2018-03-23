@@ -188,7 +188,6 @@ public class ConcreteVerticesGraph<L> implements Graph<L> {
  */
 class Vertex<L> {
     
-    // TODO fields
     private L label;
     private Map<L, Integer> in = new HashMap<>();
     private Map<L, Integer> out = new HashMap<>();
@@ -196,27 +195,22 @@ class Vertex<L> {
     // Abstraction function:
     //   represents a vertex of a graph
     // Representation invariant:
-    //   TODO
    // label is a string that is the name of a vertex and len>0
     //no multiple edges with same src and targer
     // Safety from rep exposure:
-    //   TODO
-    //returns string that is imutable, field is private,and returns copies
+    //returns string that is immutable, field is private,and returns copies
     //of mutable objects
     
-    // TODO constructor
     public Vertex(L lbl){
         this.label = lbl;
         checkRep();
     }
-    // TODO checkRep
     private void checkRep(){
         for (L inn : this.in.keySet())
             assert(this.in.get(inn) > 0);
         for (L outt : this.out.keySet())
             assert(this.out.get(outt)>0);
     }
-    // TODO methods
     public L getLabel(){
         return this.label;
     }
@@ -251,7 +245,6 @@ class Vertex<L> {
     }
     
  
-    // TODO toString()
     @Override
     public String toString(){
         String a = "";

@@ -50,7 +50,7 @@ public abstract class GraphInstanceTest {
         a.add("first elem");
         assertEquals("must be only one elem in a graph", 1, a.vertices().size());
         a.add("second elem");
-        assertEquals("must be two elem's", 2, a.vertices().size());
+        assertEquals("must be two elements", 2, a.vertices().size());
         a.add("third elem");
         assertEquals("must be three elements", 3, a.vertices().size());
         String s = "four";
